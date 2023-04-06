@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Show board{% endblock %}
+
+<!-- ;laskfjasdl;fkjsdl;fkjsadf -->
+
+{% block content%}
+<h1>working</h1>
+<table>
+    <thead>
+  {% for row in session["board"] %} 
+    {% for cell in row %}
+    <td>{{cell}}</td>
+    {% endfor %}
+  </tr>
+  {% endfor %} 
+    </thead>
+</table>
+
+<form action="/check_word">
+    <label for="guess">Guess</label>
+    <input type="text" name="guess" id="guess">
+    <button>Submit guess!</button>
+</form>
+
+
+
+
+
+{% endblock %}
