@@ -18,6 +18,6 @@ def make_and_show_board():
     return render_template('show_board.html')
 
 
-@app.route('/check_word')
+@app.route('/check_word', methods=["POST"])
 def check_for_valid_word():
     return redirect("/")

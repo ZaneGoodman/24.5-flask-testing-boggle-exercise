@@ -2,6 +2,13 @@ function test() {
   console.log("working");
 }
 
-async function checkIfValidWord() {
-  res = await axios.get("/check_word");
+$('#guessForm').on("submit", checkIfValidWord)
+
+async function checkIfValidWord(evt) {
+  evt.preventDefault()
+  console.log('working')
+  res = await axios.post("/check_word" , {
+    data: FormData($(evt.target))
+  });
+  return res
 }
