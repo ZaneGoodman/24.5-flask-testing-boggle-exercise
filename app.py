@@ -1,5 +1,5 @@
 from boggle import Boggle
-from flask import Flask, render_template, session, redirect
+from flask import Flask, render_template, session, redirect, request,jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -17,7 +17,15 @@ def make_and_show_board():
     session["board"] = board
     return render_template('show_board.html')
 
+def is_valid_word(word):
+    return Boggle.check_valid_word(boggle_game,session["board"], word)
 
-@app.route('/check_word', methods=["POST"])
-def check_for_valid_word():
+
+@app.route('/check-word', methods=["POST"])
+def check_if_valid_word():
+    user_guess =  request.get_json(force=True)['data']['guess']
+    result = is_valid_word(user_guess)
+    print(result)
     return redirect("/")
+
+
