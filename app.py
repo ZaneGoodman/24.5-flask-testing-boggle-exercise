@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "4534gdghjk5d#$RGR^HDG"
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 toolbar = DebugToolbarExtension(app)
-
+app.debug = True
 
 boggle_game = Boggle()
 
@@ -18,12 +18,22 @@ def make_and_show_board():
     return render_template('show_board.html')
 
 
-def is_valid_word(word):
-    return Boggle.check_valid_word(boggle_game, session["board"], word)
-
-
-@app.route('/check-word', methods=["POST", "GET"])
+@app.route('/check-word')
 def check_if_valid_word():
-    user_guess = request.get_json(force=True)['data']['guess']
-    result = is_valid_word(user_guess)
-    return jsonify(result)
+    user_guess = request.args["word"]
+    board = session["board"]
+    response = boggle_game.check_valid_word(board, user_guess)
+
+    return jsonify({'result': response})
+
+
+@app.route('/highscore', methods=["POST"])
+def check_times_played_and_highscore():
+    score = request.json["score"]
+    highscore = session.get("highscore", 0)
+    times_played = session.get("times_played", 0)
+
+    session["times_played"] = times_played + 1
+    session["highscore"] = max(score, highscore)
+
+    return jsonify(broke_record=score > highscore)

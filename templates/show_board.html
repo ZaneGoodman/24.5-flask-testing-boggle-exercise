@@ -3,7 +3,8 @@
 
 
 {% block content%}
-<h1>working</h1>
+
+<section id="boggle">
 <table>
     <thead>
   {% for row in session["board"] %} 
@@ -15,17 +16,34 @@
     </thead>
 </table>
 
-<form method="POST" id="guessForm">
-    <label for="guess">Guess</label>
-    <input type="text" name="guess" id="guess">
-    <button>Submit guess!</button>
-</form>
+<p>
+  Highscore: 
+  <b class="highscore">{{session["highscore"]}}</b> 
+  in {{session["times_played"]}} playes
+</p>
+<p>
+  Score: <b class="score">0</b>
+    
+  Seconds Lefts: <b class="timer">0</b>
+</p>
 
-<section class="messages">
-  <p id="msg">
+ <p id="msg">
 
   </p>
+
+<form method="POST" id="guessForm">
+    <input type="text" name="word" id="guess">
+    <button id="btn">Submit guess!</button>
+</form>
+
+<ul id="playedWords">
+
+</ul>
+
 </section>
+ 
+
+
 
 
 
